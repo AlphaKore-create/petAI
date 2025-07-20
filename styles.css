@@ -1,0 +1,286 @@
+/* Main styles for Pet Behavior Translator */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.navbar {
+    background-color: #5e72e4 !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.main-card {
+    border-radius: 15px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    transition: all .3s ease;
+    border: none;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    border: none;
+    margin-bottom: 25px;
+}
+
+.btn-primary {
+    background-color: #5e72e4;
+    border-color: #5e72e4;
+}
+
+.btn-primary:hover {
+    background-color: #4a5bd5;
+    border-color: #4a5bd5;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#videoElement, #videoFeed {
+    width: 100%;
+    height: auto;
+    background-color: #eee;
+    border-radius: 15px;
+}
+
+.loader {
+    display: none;
+    text-align: center;
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.loader .spinner-border {
+    color: #5e72e4;
+    width: 3rem;
+    height: 3rem;
+}
+
+.analysis-result {
+    display: none;
+    margin-top: 25px;
+    padding: 0;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.analysis-result .card-body {
+    padding: 30px;
+}
+
+.analysis-result .card-title {
+    color: #5e72e4;
+    margin-bottom: 20px;
+}
+
+#cameraPlaceholder {
+    width: 100%;
+    height: 350px;
+    background-color: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    color: #777;
+}
+
+.tooltip-icon {
+    color: #5e72e4;
+    cursor: pointer;
+}
+
+.tab-content {
+    padding: 25px 0;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #5e72e4;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #eef0ff;
+    color: #5e72e4;
+    box-shadow: none;
+}
+
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: #eef0ff;
+}
+
+/* Form styling */
+.form-control:focus, .form-select:focus {
+    border-color: #5e72e4;
+    box-shadow: 0 0 0 0.25rem rgba(94, 114, 228, 0.25);
+}
+
+.form-control, .form-select {
+    padding: 0.75rem;
+    border-radius: 8px;
+}
+
+textarea.form-control {
+    resize: vertical;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    #cameraPlaceholder {
+        height: 250px;
+    }
+}
+
+/* Animation for loading */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.spinner-border {
+    animation: spinner-border 1s linear infinite;
+}
+
+/* Additional styles for recording indicator */
+.recording-indicator {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 15px;
+    height: 15px;
+    background-color: #dc3545;
+    border-radius: 50%;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.4; }
+    100% { opacity: 1; }
+}
+
+/* Button styles for recording controls */
+.btn-success {
+    background-color: #2dce89;
+    border-color: #2dce89;
+}
+
+.btn-success:hover {
+    background-color: #26b977;
+    border-color: #26b977;
+}
+
+.btn-warning {
+    background-color: #fb6340;
+    border-color: #fb6340;
+}
+
+.btn-warning:hover {
+    background-color: #f75229;
+    border-color: #f75229;
+}
+
+.btn-danger {
+    background-color: #f5365c;
+    border-color: #f5365c;
+}
+
+.btn-danger:hover {
+    background-color: #f41e4c;
+    border-color: #f41e4c;
+}
+
+.btn-outline-primary {
+    color: #5e72e4;
+    border-color: #5e72e4;
+}
+
+.btn-outline-primary:hover {
+    background-color: #5e72e4;
+    color: #fff;
+}
+
+.btn-outline-secondary {
+    color: #8898aa;
+    border-color: #8898aa;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #8898aa;
+    color: #fff;
+}
+
+/* Analysis content styling */
+#analysisContent {
+    line-height: 1.6;
+    font-size: 1.05rem;
+}
+
+#analysisContent h4 {
+    color: #5e72e4;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#timestamp {
+    font-size: 0.85rem;
+    color: #8898aa;
+}
+
+/* Footer styling */
+footer {
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+footer a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: #5e72e4 !important;
+}
+
+/* Tooltip customization */
+.tooltip .tooltip-inner {
+    background-color: #5e72e4;
+}
+
+.tooltip.bs-tooltip-auto[x-placement^=top] .arrow::before,
+.tooltip.bs-tooltip-top .arrow::before {
+    border-top-color: #5e72e4;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+    outline: 2px solid #5e72e4;
+    outline-offset: 2px;
+}
+
+/* Transitions for smoother UX */
+.btn, .form-control, .nav-link {
+    transition: all 0.3s ease;
+}
+
+/* Card hover effect */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
