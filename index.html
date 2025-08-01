@@ -3,539 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetSpeak AI - Understanding Your Pet's Language</title>
+    <title>PetPsych AI - Understanding Your Pet's Mind</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-dark-blue: #1a2332;
-            --secondary-blue: #2d3a52;
-            --accent-blue: #4a90e2;
-            --light-blue: #6bb6ff;
-            --cream: #f7f5f0;
-            --warm-cream: #faf8f3;
-            --soft-cream: #f1ede6;
-            --text-primary: #1a2332;
-            --text-secondary: #5a6c7d;
-            --gradient-primary: linear-gradient(135deg, #1a2332 0%, #2d3a52 100%);
-            --gradient-accent: linear-gradient(135deg, #4a90e2 0%, #6bb6ff 100%);
-            --shadow-soft: 0 8px 32px rgba(26, 35, 50, 0.08);
-            --shadow-medium: 0 12px 48px rgba(26, 35, 50, 0.12);
-            --shadow-strong: 0 16px 64px rgba(26, 35, 50, 0.16);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--warm-cream);
-            color: var(--text-primary);
-            line-height: 1.6;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--soft-cream);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-blue);
-            border-radius: 4px;
-        }
-
-        /* Header */
-        .navbar {
-            background: var(--gradient-primary) !important;
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem 0;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: var(--shadow-soft);
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: var(--cream) !important;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .brand-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--gradient-accent);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
-        /* Hero Section */
-        .hero-section {
-            background: var(--gradient-primary);
-            color: var(--cream);
-            padding: 4rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.03"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.03"/><circle cx="50" cy="10" r="1" fill="%23ffffff" opacity="0.03"/><circle cx="10" cy="60" r="1" fill="%23ffffff" opacity="0.03"/><circle cx="90" cy="40" r="1" fill="%23ffffff" opacity="0.03"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--cream) 0%, var(--light-blue) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-
-        /* Cards */
-        .main-card {
-            background: var(--cream);
-            border-radius: 24px;
-            box-shadow: var(--shadow-medium);
-            border: 1px solid rgba(26, 35, 50, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .main-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-accent);
-        }
-
-        .main-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-strong);
-        }
-
-        .card-body {
-            padding: 2.5rem;
-        }
-
-        /* Tabs */
-        .nav-tabs {
-            border: none;
-            margin-bottom: 2rem;
-            background: var(--soft-cream);
-            border-radius: 16px;
-            padding: 0.5rem;
-        }
-
-        .nav-tabs .nav-link {
-            border: none;
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            font-weight: 500;
-            color: var(--text-secondary);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-tabs .nav-link:hover {
-            border: none;
-            color: var(--accent-blue);
-        }
-
-        .nav-tabs .nav-link.active {
-            background: var(--accent-blue);
-            color: white;
-            border: none;
-            box-shadow: 0 4px 16px rgba(74, 144, 226, 0.3);
-        }
-
-        /* Forms */
-        .form-label {
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-control, .form-select {
-            border: 2px solid var(--soft-cream);
-            border-radius: 12px;
-            padding: 0.875rem 1rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background: white;
-            box-shadow: 0 2px 8px rgba(26, 35, 50, 0.04);
-        }
-
-        .form-control:focus, .form-select:focus {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 4px rgba(74, 144, 226, 0.1);
-            outline: none;
-        }
-
-        .form-control::placeholder {
-            color: var(--text-secondary);
-            opacity: 0.7;
-        }
-
-        /* Buttons */
-        .btn {
-            font-weight: 600;
-            border-radius: 12px;
-            padding: 0.875rem 2rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: none;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn-primary {
-            background: var(--gradient-accent);
-            color: white;
-            box-shadow: 0 4px 16px rgba(74, 144, 226, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(74, 144, 226, 0.4);
-            background: var(--gradient-accent);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            color: white;
-            box-shadow: 0 4px 16px rgba(46, 204, 113, 0.3);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: white;
-            box-shadow: 0 4px 16px rgba(231, 76, 60, 0.3);
-        }
-
-        .btn-secondary {
-            background: var(--soft-cream);
-            color: var(--text-primary);
-            border: 2px solid var(--soft-cream);
-        }
-
-        .btn-lg {
-            padding: 1.125rem 2.5rem;
-            font-size: 1.125rem;
-        }
-
-        /* Video Container */
-        .video-container {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            background: var(--soft-cream);
-            box-shadow: var(--shadow-soft);
-            margin: 2rem 0;
-        }
-
-        #videoElement {
-            width: 100%;
-            height: auto;
-            border-radius: 20px;
-        }
-
-        #cameraPlaceholder {
-            width: 100%;
-            height: 350px;
-            background: linear-gradient(135deg, var(--soft-cream) 0%, var(--cream) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 20px;
-            color: var(--text-secondary);
-            border: 2px dashed rgba(26, 35, 50, 0.1);
-        }
-
-        .camera-icon {
-            width: 80px;
-            height: 80px;
-            background: var(--gradient-accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            margin-bottom: 1rem;
-            font-size: 2rem;
-        }
-
-        /* Recording Indicator */
-        .recording-indicator {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: #e74c3c;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            animation: pulse 2s infinite;
-            z-index: 10;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-
-        /* Loader */
-        .loader {
-            display: none;
-            text-align: center;
-            padding: 3rem;
-            background: var(--cream);
-            border-radius: 20px;
-            box-shadow: var(--shadow-soft);
-            margin: 2rem 0;
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 4px solid var(--soft-cream);
-            border-top: 4px solid var(--accent-blue);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Analysis Results */
-        .analysis-result {
-            display: none;
-            background: var(--cream);
-            border-radius: 20px;
-            box-shadow: var(--shadow-medium);
-            margin-top: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .analysis-result::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-accent);
-        }
-
-        .analysis-content {
-            padding: 2.5rem;
-            line-height: 1.8;
-            font-size: 1.05rem;
-        }
-
-        .analysis-content h3 {
-            color: var(--primary-dark-blue);
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .analysis-content h4 {
-            color: var(--accent-blue);
-            margin: 2rem 0 1rem;
-            font-weight: 600;
-        }
-
-        .analysis-content p {
-            margin-bottom: 1.5rem;
-        }
-
-        .timestamp {
-            background: var(--soft-cream);
-            padding: 1rem;
-            border-radius: 0 0 20px 20px;
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            text-align: center;
-        }
-
-        /* Action Buttons */
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        /* Tooltip */
-        .tooltip-icon {
-            color: var(--accent-blue);
-            cursor: help;
-            transition: all 0.3s ease;
-        }
-
-        .tooltip-icon:hover {
-            color: var(--light-blue);
-            transform: scale(1.1);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--primary-dark-blue);
-            color: var(--cream);
-            padding: 3rem 0;
-            margin-top: 4rem;
-        }
-
-        .footer-content {
-            text-align: center;
-        }
-
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .card-body {
-                padding: 1.5rem;
-            }
-
-            #cameraPlaceholder {
-                height: 250px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                width: 100%;
-            }
-        }
-
-        /* Animations */
-        .fade-in {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .slide-up {
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Form Container */
-        .form-container {
-            background: white;
-            border-radius: 16px;
-            padding: 2rem;
-            box-shadow: 0 4px 16px rgba(26, 35, 50, 0.04);
-            margin-bottom: 2rem;
-        }
-
-        /* Feature Icons */
-        .feature-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--gradient-accent);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            margin-bottom: 1rem;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
+    <!-- Demo Notification -->
+    <div class="demo-notification">
+        <div class="alert alert-info alert-dismissible fade show">
+            <i class="fas fa-brain me-2"></i>
+            <strong>AI Ready:</strong> Advanced pet psychology analysis powered by Gemini AI
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    </div>
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <div class="brand-icon">
-                    <i class="fas fa-paw"></i>
+                <div class="brand-logo">
+                    <svg width="40" height="40" viewBox="0 0 100 100" class="logo-svg">
+                        <defs>
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#0FA3D4;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <!-- Dog silhouette -->
+                        <path d="M35 25 C40 15, 55 15, 65 25 C70 30, 70 35, 65 40 C60 45, 55 50, 50 55 C45 50, 40 45, 35 40 C30 35, 30 30, 35 25 Z" fill="url(#logoGradient)"/>
+                        <!-- Cat silhouette -->
+                        <path d="M25 45 C30 35, 45 35, 55 45 C60 50, 60 55, 55 60 C50 65, 45 70, 40 75 C35 70, 30 65, 25 60 C20 55, 20 50, 25 45 Z" fill="url(#logoGradient)" opacity="0.8"/>
+                        <!-- Eyes -->
+                        <circle cx="42" cy="32" r="2" fill="#1e3a5f"/>
+                        <circle cx="58" cy="32" r="2" fill="#1e3a5f"/>
+                        <circle cx="32" cy="52" r="1.5" fill="#1e3a5f"/>
+                        <circle cx="48" cy="52" r="1.5" fill="#1e3a5f"/>
+                    </svg>
                 </div>
-                PetSpeak AI
+                <span class="brand-text">PetPsych AI</span>
             </a>
+            <div class="navbar-nav ms-auto">
+                <div class="nav-status">
+                    <span class="status-dot"></span>
+                    <span class="status-text">AI Online</span>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -545,8 +59,38 @@
             <div class="row justify-content-center text-center">
                 <div class="col-lg-8">
                     <div class="hero-content">
-                        <h1 class="hero-title">Understanding Your Pet's Language</h1>
-                        <p class="hero-subtitle">Advanced AI technology that translates your pet's behaviors, vocalizations, and body language into meaningful insights.</p>
+                        <div class="hero-logo-large mb-4">
+                            <svg width="120" height="120" viewBox="0 0 100 100" class="hero-logo-svg">
+                                <defs>
+                                    <linearGradient id="heroLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#0FA3D4;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Dog silhouette -->
+                                <path d="M35 25 C40 15, 55 15, 65 25 C70 30, 70 35, 65 40 C60 45, 55 50, 50 55 C45 50, 40 45, 35 40 C30 35, 30 30, 35 25 Z" fill="url(#heroLogoGradient)"/>
+                                <!-- Cat silhouette -->
+                                <path d="M25 45 C30 35, 45 35, 55 45 C60 50, 60 55, 55 60 C50 65, 45 70, 40 75 C35 70, 30 65, 25 60 C20 55, 20 50, 25 45 Z" fill="url(#heroLogoGradient)" opacity="0.8"/>
+                                <!-- Brain pattern overlay -->
+                                <path d="M42 28 C45 25, 50 25, 53 28 C55 30, 55 32, 53 34 M38 48 C41 45, 46 45, 49 48 C51 50, 51 52, 49 54" stroke="#ffffff" stroke-width="1" fill="none" opacity="0.6"/>
+                            </svg>
+                        </div>
+                        <h1 class="hero-title">Understanding Your Pet's Mind</h1>
+                        <p class="hero-subtitle">Advanced AI psychology that decodes your pet's behaviors, emotions, and thoughts into meaningful insights for deeper bonding.</p>
+                        <div class="hero-features">
+                            <div class="feature-pill">
+                                <i class="fas fa-brain"></i>
+                                <span>AI Psychology</span>
+                            </div>
+                            <div class="feature-pill">
+                                <i class="fas fa-video"></i>
+                                <span>Live Analysis</span>
+                            </div>
+                            <div class="feature-pill">
+                                <i class="fas fa-heart"></i>
+                                <span>Emotional Intelligence</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -564,13 +108,15 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="form-tab" data-bs-toggle="tab" data-bs-target="#form"
                                         type="button" role="tab" aria-selected="true">
-                                    <i class="fas fa-edit me-2"></i>Input Details
+                                    <i class="fas fa-edit me-2"></i>
+                                    <span>Behavioral Input</span>
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="camera-tab" data-bs-toggle="tab" data-bs-target="#camera"
                                         type="button" role="tab" aria-selected="false">
-                                    <i class="fas fa-video me-2"></i>Live Capture
+                                    <i class="fas fa-video me-2"></i>
+                                    <span>Live Capture</span>
                                 </button>
                             </li>
                         </ul>
@@ -579,6 +125,11 @@
                             <!-- Form Tab -->
                             <div class="tab-pane fade show active" id="form" role="tabpanel">
                                 <div class="form-container">
+                                    <div class="form-header">
+                                        <h4><i class="fas fa-clipboard-list me-2"></i>Pet Behavioral Analysis</h4>
+                                        <p class="text-muted">Provide detailed information about your pet's behavior for comprehensive AI analysis</p>
+                                    </div>
+
                                     <form id="petForm">
                                         <div class="row">
                                             <div class="col-md-6 mb-4">
@@ -586,7 +137,7 @@
                                                     <i class="fas fa-heart text-danger me-2"></i>Pet's Name
                                                 </label>
                                                 <input type="text" class="form-control" id="pet_name" name="pet_name"
-                                                       placeholder="What's your pet's name?" required>
+                                                       placeholder="Enter your pet's name" required>
                                             </div>
                                             <div class="col-md-6 mb-4">
                                                 <label for="pet_breed" class="form-label">
@@ -604,14 +155,14 @@
                                                 </label>
                                                 <select class="form-select" id="pet_type" name="pet_type" required>
                                                     <option value="">Select pet type</option>
-                                                    <option value="dog">Dog</option>
-                                                    <option value="cat">Cat</option>
-                                                    <option value="bird">Bird</option>
-                                                    <option value="rabbit">Rabbit</option>
-                                                    <option value="hamster">Hamster</option>
-                                                    <option value="guinea pig">Guinea Pig</option>
-                                                    <option value="ferret">Ferret</option>
-                                                    <option value="other">Other</option>
+                                                    <option value="dog">🐕 Dog</option>
+                                                    <option value="cat">🐱 Cat</option>
+                                                    <option value="bird">🐦 Bird</option>
+                                                    <option value="rabbit">🐰 Rabbit</option>
+                                                    <option value="hamster">🐹 Hamster</option>
+                                                    <option value="guinea pig">🐹 Guinea Pig</option>
+                                                    <option value="ferret">🦫 Ferret</option>
+                                                    <option value="other">🐾 Other</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -619,28 +170,29 @@
                                         <div class="mb-4">
                                             <label for="behavior_desc" class="form-label">
                                                 <i class="fas fa-eye me-2"></i>Behavior Description
+                                                <span class="badge bg-primary ms-2">Required</span>
                                             </label>
                                             <textarea class="form-control" id="behavior_desc" name="behavior_desc" rows="4"
-                                                    placeholder="Describe what your pet is doing in detail (e.g., pacing back and forth, tail wagging rapidly, scratching at the door)" required></textarea>
+                                                    placeholder="Describe your pet's behavior in detail (e.g., pacing back and forth, tail wagging rapidly, unusual vocalizations, body posture changes)" required></textarea>
                                         </div>
 
                                         <div class="mb-4">
                                             <label for="vocal_cues" class="form-label">
-                                                <i class="fas fa-volume-up me-2"></i>Vocal Cues
+                                                <i class="fas fa-volume-up me-2"></i>Vocal Cues & Sounds
                                             </label>
                                             <textarea class="form-control" id="vocal_cues" name="vocal_cues" rows="3"
-                                                    placeholder="Describe any sounds your pet is making (e.g., short barks, continuous meowing, chirping patterns)"></textarea>
+                                                    placeholder="Describe any sounds: barking patterns, meowing types, chirping, whimpering, purring intensity, etc."></textarea>
                                         </div>
 
                                         <div class="mb-4">
                                             <label for="context" class="form-label">
-                                                <i class="fas fa-map-marker-alt me-2"></i>Situational Context
+                                                <i class="fas fa-map-marker-alt me-2"></i>Environmental Context
                                                 <i class="fas fa-question-circle tooltip-icon ms-2"
                                                    data-bs-toggle="tooltip"
-                                                   title="Include details about the environment, recent events, or changes that might be affecting your pet"></i>
+                                                   title="Include environmental factors, recent changes, or events that might influence your pet's behavior"></i>
                                             </label>
                                             <textarea class="form-control" id="context" name="context" rows="3"
-                                                    placeholder="Describe the environment, recent changes, or relevant situations (e.g., moved to new home, new family member, recent vet visit, time of day)"></textarea>
+                                                    placeholder="Environment details: new home, visitors, weather changes, schedule disruptions, other pets, recent vet visits, etc."></textarea>
                                         </div>
 
                                         <div class="mb-4">
@@ -651,13 +203,15 @@
                                                    accept="video/*">
                                             <div class="form-text mt-2">
                                                 <i class="fas fa-info-circle me-1"></i>
-                                                Upload a video of your pet's behavior for more accurate analysis
+                                                Video uploads provide more accurate behavioral analysis
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-lg">
-                                                <i class="fas fa-brain me-2"></i>Analyze Pet Behavior
+                                            <button type="submit" class="btn btn-primary btn-lg submit-btn">
+                                                <i class="fas fa-brain me-2"></i>
+                                                <span>Analyze Pet Psychology</span>
+                                                <div class="btn-glow"></div>
                                             </button>
                                         </div>
                                     </form>
@@ -670,8 +224,8 @@
                                     <div class="feature-icon mx-auto">
                                         <i class="fas fa-video"></i>
                                     </div>
-                                    <h4>Real-time Pet Behavior Capture</h4>
-                                    <p class="text-muted">Use your camera to record your pet's behavior for immediate analysis</p>
+                                    <h4>Real-time Behavioral Capture</h4>
+                                    <p class="text-muted">Use your camera to record live pet behavior for immediate AI analysis</p>
                                 </div>
 
                                 <div class="video-container">
@@ -680,23 +234,23 @@
                                             <i class="fas fa-camera"></i>
                                         </div>
                                         <h5>Camera Ready</h5>
-                                        <p class="mb-0">Click "Start Camera" to begin recording your pet</p>
+                                        <p class="mb-0">Click "Start Camera" to begin recording your pet's behavior</p>
                                     </div>
                                     <video id="videoElement" style="display: none;" autoplay="true"></video>
                                 </div>
 
                                 <div class="text-center mb-4">
                                     <div class="action-buttons justify-content-center">
-                                        <button id="startCameraBtn" class="btn btn-primary">
+                                        <button id="startCameraBtn" class="btn btn-primary camera-btn">
                                             <i class="fas fa-play me-2"></i>Start Camera
                                         </button>
-                                        <button id="captureBtn" class="btn btn-success" style="display:none;">
+                                        <button id="captureBtn" class="btn btn-success camera-btn" style="display:none;">
                                             <i class="fas fa-record-vinyl me-2"></i>Start Recording
                                         </button>
-                                        <button id="stopBtn" class="btn btn-danger" style="display:none;">
+                                        <button id="stopBtn" class="btn btn-danger camera-btn" style="display:none;">
                                             <i class="fas fa-stop me-2"></i>Stop Recording
                                         </button>
-                                        <button id="stopCameraBtn" class="btn btn-secondary" style="display:none;">
+                                        <button id="stopCameraBtn" class="btn btn-secondary camera-btn" style="display:none;">
                                             <i class="fas fa-camera-slash me-2"></i>Turn Off Camera
                                         </button>
                                     </div>
@@ -704,9 +258,11 @@
 
                                 <div id="cameraFormContainer" style="display:none;">
                                     <div class="form-container">
-                                        <h5 class="mb-4">
-                                            <i class="fas fa-plus-circle me-2"></i>Add Additional Details
-                                        </h5>
+                                        <div class="form-header">
+                                            <h5><i class="fas fa-plus-circle me-2"></i>Complete Your Analysis</h5>
+                                            <p class="text-muted">Add contextual details to enhance AI analysis accuracy</p>
+                                        </div>
+
                                         <form id="cameraForm">
                                             <div class="row">
                                                 <div class="col-md-6 mb-4">
@@ -730,21 +286,21 @@
                                                     </label>
                                                     <select class="form-select" id="cam_pet_type" name="pet_type" required>
                                                         <option value="">Select pet type</option>
-                                                        <option value="dog">Dog</option>
-                                                        <option value="cat">Cat</option>
-                                                        <option value="bird">Bird</option>
-                                                        <option value="rabbit">Rabbit</option>
-                                                        <option value="hamster">Hamster</option>
-                                                        <option value="guinea pig">Guinea Pig</option>
-                                                        <option value="ferret">Ferret</option>
-                                                        <option value="other">Other</option>
+                                                        <option value="dog">🐕 Dog</option>
+                                                        <option value="cat">🐱 Cat</option>
+                                                        <option value="bird">🐦 Bird</option>
+                                                        <option value="rabbit">🐰 Rabbit</option>
+                                                        <option value="hamster">🐹 Hamster</option>
+                                                        <option value="guinea pig">🐹 Guinea Pig</option>
+                                                        <option value="ferret">🦫 Ferret</option>
+                                                        <option value="other">🐾 Other</option>
                                                     </select>
                                                 </div>
                                             </div>
 
                                             <div class="mb-4">
                                                 <label for="cam_behavior_desc" class="form-label">
-                                                    <i class="fas fa-eye me-2"></i>Behavior Description
+                                                    <i class="fas fa-eye me-2"></i>Observed Behavior
                                                 </label>
                                                 <textarea class="form-control" id="cam_behavior_desc" name="behavior_desc" rows="3"
                                                         placeholder="Describe what your pet was doing during the recording"></textarea>
@@ -752,25 +308,27 @@
 
                                             <div class="mb-4">
                                                 <label for="cam_vocal_cues" class="form-label">
-                                                    <i class="fas fa-volume-up me-2"></i>Vocal Cues
+                                                    <i class="fas fa-volume-up me-2"></i>Audio Cues
                                                 </label>
                                                 <textarea class="form-control" id="cam_vocal_cues" name="vocal_cues" rows="2"
-                                                        placeholder="Describe any sounds your pet made during recording"></textarea>
+                                                        placeholder="Sounds captured during recording"></textarea>
                                             </div>
 
                                             <div class="mb-4">
                                                 <label for="cam_context" class="form-label">
-                                                    <i class="fas fa-map-marker-alt me-2"></i>Situational Context
+                                                    <i class="fas fa-map-marker-alt me-2"></i>Recording Context
                                                 </label>
                                                 <textarea class="form-control" id="cam_context" name="context" rows="2"
-                                                        placeholder="Describe the environment, recent changes, or relevant situations"></textarea>
+                                                        placeholder="Environmental factors during recording"></textarea>
                                             </div>
 
                                             <input type="hidden" id="captured_video" name="captured_video">
 
                                             <div class="text-center">
-                                                <button type="submit" class="btn btn-primary btn-lg">
-                                                    <i class="fas fa-brain me-2"></i>Analyze Captured Behavior
+                                                <button type="submit" class="btn btn-primary btn-lg submit-btn">
+                                                    <i class="fas fa-brain me-2"></i>
+                                                    <span>Analyze Captured Behavior</span>
+                                                    <div class="btn-glow"></div>
                                                 </button>
                                             </div>
                                         </form>
@@ -783,18 +341,38 @@
 
                 <!-- Loading Indicator -->
                 <div class="loader" id="loader">
-                    <div class="spinner"></div>
-                    <h5>Analyzing Your Pet's Behavior</h5>
-                    <p class="text-muted mb-0">Our AI is carefully studying the patterns and signals...</p>
+                    <div class="loader-content">
+                        <div class="spinner"></div>
+                        <div class="loader-logo">
+                            <svg width="60" height="60" viewBox="0 0 100 100">
+                                <defs>
+                                    <linearGradient id="loaderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#0FA3D4;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                                <path d="M35 25 C40 15, 55 15, 65 25 C70 30, 70 35, 65 40 C60 45, 55 50, 50 55 C45 50, 40 45, 35 40 C30 35, 30 30, 35 25 Z" fill="url(#loaderGradient)"/>
+                                <path d="M25 45 C30 35, 45 35, 55 45 C60 50, 60 55, 55 60 C50 65, 45 70, 40 75 C35 70, 30 65, 25 60 C20 55, 20 50, 25 45 Z" fill="url(#loaderGradient)" opacity="0.8"/>
+                            </svg>
+                        </div>
+                        <h5>AI Analysis in Progress</h5>
+                        <p class="text-muted mb-0">Decoding your pet's psychological patterns...</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Analysis Results -->
-                <div class="analysis-result slide-up" id="analysisResult">
+                <div class="analysis-result slide-up" id="analysisResult" style="display: none;">
+                    <div class="analysis-header">
+                        <div class="analysis-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Pet Psychology Analysis Report</h3>
+                        <p class="analysis-subtitle">AI-powered behavioral insights and recommendations</p>
+                    </div>
                     <div class="analysis-content">
-                        <h3>
-                            <i class="fas fa-lightbulb text-warning"></i>
-                            Pet Behavior Analysis
-                        </h3>
                         <div id="analysisContent"></div>
                         <div class="action-buttons">
                             <button id="newAnalysisBtn" class="btn btn-primary">
@@ -802,6 +380,9 @@
                             </button>
                             <button id="downloadBtn" class="btn btn-secondary">
                                 <i class="fas fa-download me-2"></i>Download Report
+                            </button>
+                            <button class="btn btn-outline-primary">
+                                <i class="fas fa-share me-2"></i>Share Results
                             </button>
                         </div>
                     </div>
@@ -816,13 +397,25 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <div class="brand-icon">
-                        <i class="fas fa-paw"></i>
-                    </div>
-                    PetSpeak AI
+                    <svg width="40" height="40" viewBox="0 0 100 100" class="footer-logo-svg">
+                        <defs>
+                            <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#0FA3D4;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M35 25 C40 15, 55 15, 65 25 C70 30, 70 35, 65 40 C60 45, 55 50, 50 55 C45 50, 40 45, 35 40 C30 35, 30 30, 35 25 Z" fill="url(#footerLogoGradient)"/>
+                        <path d="M25 45 C30 35, 45 35, 55 45 C60 50, 60 55, 55 60 C50 65, 45 70, 40 75 C35 70, 30 65, 25 60 C20 55, 20 50, 25 45 Z" fill="url(#footerLogoGradient)" opacity="0.8"/>
+                    </svg>
+                    <span>PetPsych AI</span>
                 </div>
-                <p class="mb-0">Understanding your pet's language through advanced AI technology</p>
-                <small class="text-muted">Powered by Gemini 1.5 Pro • © 2025 PetSpeak AI</small>
+                <p class="mb-2">Understanding your pet's mind through advanced AI psychology</p>
+                <small class="text-muted">Powered by Gemini 1.5 Pro • © 2025 PetPsych AI</small>
+                <div class="footer-links mt-3">
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                    <a href="#" class="footer-link">Support</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -830,372 +423,141 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Global variables
-        let mediaRecorder;
-        let recordedChunks = [];
-        let stream = null;
-        let isRecording = false;
+        // Working JavaScript for Beautiful PetPsych AI
+        console.log('🧠 PetPsych AI Loading...');
 
-        // DOM elements
-        const videoElement = document.getElementById('videoElement');
-        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
-        const startCameraBtn = document.getElementById('startCameraBtn');
-        const captureBtn = document.getElementById('captureBtn');
-        const stopBtn = document.getElementById('stopBtn');
-        const stopCameraBtn = document.getElementById('stopCameraBtn');
-        const cameraFormContainer = document.getElementById('cameraFormContainer');
-        const capturedVideoInput = document.getElementById('captured_video');
+        let analysisInProgress = false;
+        let currentAnalysis = '';
 
-        // Form elements
-        const petForm = document.getElementById('petForm');
-        const cameraForm = document.getElementById('cameraForm');
-        const loader = document.getElementById('loader');
-        const analysisResult = document.getElementById('analysisResult');
-        const analysisContent = document.getElementById('analysisContent');
-        const timestamp = document.getElementById('timestamp');
-        const newAnalysisBtn = document.getElementById('newAnalysisBtn');
-        const downloadBtn = document.getElementById('downloadBtn');
-
-        // Initialize when DOM is loaded
+        // Initialize when DOM loads
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('📄 Beautiful version loading...');
+            initializeApp();
+        });
+
+        function initializeApp() {
             // Initialize tooltips
             const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl);
             });
 
-            // Add smooth animations
-            const cards = document.querySelectorAll('.main-card');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            });
+            // Setup form handlers
+            setupFormHandlers();
 
+            // Setup animations
+            setupAnimations();
+
+            console.log('✅ Beautiful PetPsych AI initialized');
+        }
+
+        function setupFormHandlers() {
+            const petForm = document.getElementById('petForm');
+            const cameraForm = document.getElementById('cameraForm');
+
+            if (petForm) {
+                petForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log('📝 Pet form submitted');
+                    submitForm(this);
+                });
+            }
+
+            if (cameraForm) {
+                cameraForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    console.log('📹 Camera form submitted');
+                    submitForm(this);
+                });
+            }
+
+            // Button handlers
+            const newAnalysisBtn = document.getElementById('newAnalysisBtn');
+            if (newAnalysisBtn) {
+                newAnalysisBtn.addEventListener('click', resetForNewAnalysis);
+            }
+
+            const downloadBtn = document.getElementById('downloadBtn');
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', downloadReport);
+            }
+        }
+
+        function setupAnimations() {
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.main-card, .form-container');
             cards.forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(card);
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
             });
-        });
 
-        // Camera functionality
-        startCameraBtn.addEventListener('click', async () => {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({
-                    video: { width: 1280, height: 720 },
-                    audio: true
+            // Logo animations
+            const logos = document.querySelectorAll('.logo-svg, .hero-logo-svg');
+            logos.forEach(logo => {
+                logo.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.1) rotate(5deg)';
                 });
 
-                videoElement.srcObject = stream;
-                videoElement.style.display = 'block';
-                cameraPlaceholder.style.display = 'none';
-
-                // Update button states
-                startCameraBtn.style.display = 'none';
-                captureBtn.style.display = 'inline-block';
-                stopCameraBtn.style.display = 'inline-block';
-
-                // Add success feedback
-                showNotification('Camera started successfully!', 'success');
-            } catch (err) {
-                console.error('Error accessing camera:', err);
-                showNotification('Unable to access camera. Please check permissions.', 'error');
-            }
-        });
-
-        stopCameraBtn.addEventListener('click', () => {
-            if (stream) {
-                const tracks = stream.getTracks();
-                tracks.forEach(track => track.stop());
-                stream = null;
-
-                // Reset UI
-                videoElement.srcObject = null;
-                videoElement.style.display = 'none';
-                cameraPlaceholder.style.display = 'flex';
-
-                startCameraBtn.style.display = 'inline-block';
-                captureBtn.style.display = 'none';
-                stopBtn.style.display = 'none';
-                stopCameraBtn.style.display = 'none';
-
-                // If recording, stop it
-                if (isRecording) {
-                    stopRecording();
-                }
-
-                // Remove recording indicator
-                const indicator = document.querySelector('.recording-indicator');
-                if (indicator) {
-                    indicator.remove();
-                }
-
-                showNotification('Camera stopped', 'info');
-            }
-        });
-
-        captureBtn.addEventListener('click', () => {
-            if (stream) {
-                startRecording();
-            }
-        });
-
-        stopBtn.addEventListener('click', () => {
-            stopRecording();
-        });
-
-        function startRecording() {
-            try {
-                mediaRecorder = new MediaRecorder(stream, {
-                    mimeType: 'video/webm;codecs=vp9'
+                logo.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1) rotate(0deg)';
                 });
-                recordedChunks = [];
-
-                mediaRecorder.ondataavailable = (e) => {
-                    if (e.data.size > 0) {
-                        recordedChunks.push(e.data);
-                    }
-                };
-
-                mediaRecorder.onstop = () => {
-                    const blob = new Blob(recordedChunks, { type: 'video/webm' });
-                    const reader = new FileReader();
-                    reader.readAsDataURL(blob);
-                    reader.onloadend = () => {
-                        const base64data = reader.result;
-                        capturedVideoInput.value = base64data;
-                        cameraFormContainer.style.display = 'block';
-                        cameraFormContainer.scrollIntoView({ behavior: 'smooth' });
-                        showNotification('Video recorded successfully!', 'success');
-                    };
-                };
-
-                // Start recording
-                mediaRecorder.start();
-                isRecording = true;
-
-                // Update UI
-                captureBtn.style.display = 'none';
-                stopBtn.style.display = 'inline-block';
-
-                // Add recording indicator
-                const indicator = document.createElement('div');
-                indicator.className = 'recording-indicator';
-                indicator.innerHTML = '<i class="fas fa-circle me-1"></i>Recording';
-                videoElement.parentElement.appendChild(indicator);
-
-                showNotification('Recording started', 'info');
-            } catch (error) {
-                console.error('Recording error:', error);
-                showNotification('Recording failed. Please try again.', 'error');
-            }
+            });
         }
-
-        function stopRecording() {
-            if (mediaRecorder && isRecording) {
-                mediaRecorder.stop();
-                isRecording = false;
-
-                // Update UI
-                stopBtn.style.display = 'none';
-                captureBtn.style.display = 'inline-block';
-
-                // Remove recording indicator
-                const indicator = document.querySelector('.recording-indicator');
-                if (indicator) {
-                    indicator.remove();
-                }
-
-                showNotification('Recording stopped', 'info');
-            }
-        }
-
-        // Form submission handlers
-        petForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await submitForm(petForm);
-        });
-
-        cameraForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            await submitForm(cameraForm);
-        });
 
         async function submitForm(form) {
-            // Show loading with animation
-            loader.style.display = 'block';
-            loader.classList.add('fade-in');
-            analysisResult.style.display = 'none';
+            if (analysisInProgress) {
+                showNotification('Analysis already in progress...', 'warning');
+                return;
+            }
+
+            // Validate form
+            if (!validateForm(form)) {
+                return;
+            }
+
+            analysisInProgress = true;
 
             try {
-                const formData = new FormData(form);
+                // Show loading with beautiful animation
+                showLoader();
+                hideTabContent();
 
-                // Add loading progress simulation
-                let progress = 0;
-                const progressInterval = setInterval(() => {
-                    progress += Math.random() * 15;
-                    if (progress > 90) {
-                        clearInterval(progressInterval);
-                    }
-                }, 500);
+                // Prepare and send request
+                const formData = new FormData(form);
+                console.log('📤 Sending beautiful analysis request...');
 
                 const response = await fetch('/analyze_behavior', {
                     method: 'POST',
                     body: formData
                 });
 
-                clearInterval(progressInterval);
+                console.log('📥 Response received:', response.status);
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error(`Server error: ${response.status}`);
                 }
 
                 const result = await response.json();
-                await displayAnalysisResult(result);
+                console.log('📊 Beautiful result received:', result.success);
+
+                // Display results with beautiful styling
+                displayBeautifulResults(result);
 
             } catch (error) {
-                console.error('Error submitting form:', error);
-                showNotification('Analysis failed. Please try again.', 'error');
-                loader.style.display = 'none';
+                console.error('💥 Beautiful analysis failed:', error);
+                showNotification('Analysis failed: ' + error.message, 'error');
+                showTabContent();
+            } finally {
+                hideLoader();
+                analysisInProgress = false;
             }
         }
 
-        async function displayAnalysisResult(result) {
-            // Hide loading
-            loader.style.display = 'none';
-
-            if (result.success) {
-                // Format the analysis with enhanced styling
-                const formattedAnalysis = formatAnalysisText(result.analysis);
-
-                // Display results with animation
-                analysisContent.innerHTML = formattedAnalysis;
-                timestamp.textContent = `Analysis completed: ${result.timestamp}`;
-
-                analysisResult.style.display = 'block';
-                analysisResult.classList.add('slide-up');
-
-                // Smooth scroll to results
-                setTimeout(() => {
-                    analysisResult.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }, 300);
-
-                // Hide form sections
-                document.getElementById('tabContent').style.display = 'none';
-
-                showNotification('Analysis completed successfully!', 'success');
-            } else {
-                showNotification(`Analysis failed: ${result.error}`, 'error');
-            }
-        }
-
-        function formatAnalysisText(text) {
-            return text
-                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-primary">$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/(\d+\.)\s/g, '<h4 class="mt-4 mb-2">$1</h4>')
-                .replace(/\n\n/g, '</p><p>')
-                .replace(/\n/g, '<br>')
-                .replace(/^(.*)$/, '<p>$1</p>');
-        }
-
-        // Reset for new analysis
-        newAnalysisBtn.addEventListener('click', () => {
-            // Show form sections with animation
-            document.getElementById('tabContent').style.display = 'block';
-            document.getElementById('tabContent').classList.add('fade-in');
-
-            // Hide results
-            analysisResult.style.display = 'none';
-
-            // Reset forms
-            petForm.reset();
-            cameraForm.reset();
-            capturedVideoInput.value = '';
-
-            // Return to first tab
-            const formTab = document.getElementById('form-tab');
-            const tab = new bootstrap.Tab(formTab);
-            tab.show();
-
-            // Reset camera form container
-            cameraFormContainer.style.display = 'none';
-
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-
-            showNotification('Ready for new analysis', 'info');
-        });
-
-        // Download analysis
-        downloadBtn.addEventListener('click', () => {
-            const petName = document.getElementById('pet_name').value ||
-                           document.getElementById('cam_pet_name').value || 'pet';
-            const fileName = `${petName}_behavior_analysis_${new Date().toISOString().slice(0,10)}.txt`;
-
-            const content = `PetSpeak AI - Behavior Analysis Report
-${'='.repeat(50)}
-
-Pet: ${petName}
-${timestamp.textContent}
-
-${analysisContent.innerText}
-
-${'='.repeat(50)}
-Generated by PetSpeak AI
-Powered by Gemini 1.5 Pro`;
-
-            const blob = new Blob([content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileName;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            showNotification('Report downloaded successfully!', 'success');
-        });
-
-        // Notification system
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `alert alert-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'} alert-dismissible fade show position-fixed`;
-            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
-
-            notification.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
-
-            document.body.appendChild(notification);
-
-            // Auto-remove after 5 seconds
-            setTimeout(() => {
-                if (notification.parentNode) {
-                    notification.remove();
-                }
-            }, 5000);
-        }
-
-        // Tab change listener
-        document.querySelector('button#form-tab').addEventListener('click', function() {
-            if (stream) {
-                stopCameraBtn.click();
-            }
-        });
-
-        // Form validation enhancement
         function validateForm(form) {
             const requiredFields = form.querySelectorAll('[required]');
             let isValid = true;
@@ -1206,54 +568,375 @@ Powered by Gemini 1.5 Pro`;
                     isValid = false;
                 } else {
                     field.classList.remove('is-invalid');
+                    field.classList.add('is-valid');
                 }
             });
+
+            if (!isValid) {
+                showNotification('Please fill in all required fields', 'error');
+            }
 
             return isValid;
         }
 
-        // Enhanced form submission with validation
-        [petForm, cameraForm].forEach(form => {
-            form.addEventListener('submit', function(e) {
-                if (!validateForm(this)) {
-                    e.preventDefault();
-                    showNotification('Please fill in all required fields', 'error');
-                }
-            });
-        });
-
-        // Auto-save form data to prevent loss
-        function saveFormData() {
-            const formData = {
-                pet_name: document.getElementById('pet_name').value,
-                pet_breed: document.getElementById('pet_breed').value,
-                pet_type: document.getElementById('pet_type').value,
-                behavior_desc: document.getElementById('behavior_desc').value,
-                vocal_cues: document.getElementById('vocal_cues').value,
-                context: document.getElementById('context').value
-            };
-
-            // Store in memory during session
-            window.petFormData = formData;
-        }
-
-        // Restore form data
-        function restoreFormData() {
-            if (window.petFormData) {
-                Object.keys(window.petFormData).forEach(key => {
-                    const element = document.getElementById(key);
-                    if (element) {
-                        element.value = window.petFormData[key];
-                    }
-                });
+        function showLoader() {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.display = 'block';
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.transition = 'opacity 0.5s ease';
+                    loader.style.opacity = '1';
+                }, 100);
+                console.log('⏳ Beautiful loader shown');
             }
         }
 
-        // Auto-save every 30 seconds
-        setInterval(saveFormData, 30000);
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 300);
+                console.log('✅ Beautiful loader hidden');
+            }
+        }
 
-        // Restore on page load
-        window.addEventListener('load', restoreFormData);
+        function hideTabContent() {
+            const tabContent = document.getElementById('tabContent');
+            if (tabContent) {
+                tabContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+                tabContent.style.opacity = '0.3';
+                tabContent.style.transform = 'scale(0.98)';
+                tabContent.style.pointerEvents = 'none';
+                console.log('📝 Beautiful form hidden');
+            }
+        }
+
+        function showTabContent() {
+            const tabContent = document.getElementById('tabContent');
+            if (tabContent) {
+                tabContent.style.opacity = '1';
+                tabContent.style.transform = 'scale(1)';
+                tabContent.style.pointerEvents = 'auto';
+                console.log('📝 Beautiful form shown');
+            }
+        }
+
+        function displayBeautifulResults(result) {
+            console.log('🎨 Displaying beautiful results...');
+
+            if (result.success) {
+                currentAnalysis = result.analysis;
+
+                // Format analysis with beautiful styling
+                const formattedAnalysis = formatBeautifulAnalysis(result.analysis);
+
+                // Update analysis content
+                const analysisContent = document.getElementById('analysisContent');
+                const timestamp = document.getElementById('timestamp');
+                const analysisResult = document.getElementById('analysisResult');
+
+                if (analysisContent) {
+                    analysisContent.innerHTML = formattedAnalysis;
+                }
+
+                if (timestamp) {
+                    timestamp.textContent = `Analysis completed: ${result.timestamp}`;
+                }
+
+                // Show results with beautiful animation
+                if (analysisResult) {
+                    analysisResult.style.display = 'block';
+                    analysisResult.style.opacity = '0';
+                    analysisResult.style.transform = 'translateY(30px)';
+
+                    setTimeout(() => {
+                        analysisResult.style.transition = 'all 0.6s ease';
+                        analysisResult.style.opacity = '1';
+                        analysisResult.style.transform = 'translateY(0)';
+                    }, 200);
+                }
+
+                // Beautiful scroll to results
+                setTimeout(() => {
+                    analysisResult.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 600);
+
+                // Animate content items
+                setTimeout(() => {
+                    animateAnalysisContent();
+                }, 800);
+
+                showNotification('🧠 Analysis completed successfully!', 'success');
+                console.log('✅ Beautiful results displayed');
+
+            } else {
+                console.error('❌ Beautiful analysis failed:', result.error);
+                showNotification('Analysis failed: ' + result.error, 'error');
+                showTabContent();
+            }
+        }
+
+        function formatBeautifulAnalysis(text) {
+            if (!text) return '<p>No analysis content received.</p>';
+
+            return text
+                // Enhanced headers with beautiful styling
+                .replace(/(\d+\.\s*)(.*?)(?=\n|$)/g, '<h4 class="analysis-section" style="color: #0FA3D4; margin: 2rem 0 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-brain"></i>$1$2</h4>')
+                // Bold text with beautiful gradient
+                .replace(/\*\*(.*?)\*\*/g, '<strong style="background: linear-gradient(135deg, #0FA3D4, #00D4AA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">$1</strong>')
+                // Italic text with subtle color
+                .replace(/\*(.*?)\*/g, '<em style="color: #64748b; font-style: italic;">$1</em>')
+                // Line breaks and paragraphs
+                .replace(/\n\n/g, '</p><p style="margin-bottom: 1.5rem; line-height: 1.8;">')
+                .replace(/\n/g, '<br>')
+                .replace(/^(.*)$/, '<p style="margin-bottom: 1.5rem; line-height: 1.8;">$1</p>')
+                // Beautiful callouts
+                .replace(/(Key insight:|Important:|Note:|Warning:)/gi, '<span style="background: linear-gradient(135deg, #0FA3D4, #00D4AA); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; margin-right: 0.5rem;">$1</span>')
+                // Emoji enhancements
+                .replace(/(happy|joy|playful|content)/gi, '😊 $1')
+                .replace(/(anxious|stressed|worried|fearful)/gi, '😰 $1')
+                .replace(/(aggressive|angry|frustrated)/gi, '😠 $1');
+        }
+
+        function animateAnalysisContent() {
+            const sections = document.querySelectorAll('#analysisContent h4, #analysisContent p');
+            sections.forEach((section, index) => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+
+                setTimeout(() => {
+                    section.style.transition = 'all 0.5s ease';
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        }
+
+        function resetForNewAnalysis() {
+            console.log('🔄 Beautiful reset for new analysis...');
+
+            // Show form with beautiful animation
+            showTabContent();
+
+            setTimeout(() => {
+                document.getElementById('tabContent').style.animation = 'fadeIn 0.6s ease';
+            }, 100);
+
+            // Hide results with beautiful animation
+            const analysisResult = document.getElementById('analysisResult');
+            if (analysisResult) {
+                analysisResult.style.opacity = '0';
+                analysisResult.style.transform = 'translateY(-20px)';
+
+                setTimeout(() => {
+                    analysisResult.style.display = 'none';
+                }, 300);
+            }
+
+            // Reset forms with beautiful clearing animation
+            const forms = [document.getElementById('petForm'), document.getElementById('cameraForm')];
+            forms.forEach(form => {
+                if (form) {
+                    const inputs = form.querySelectorAll('.form-control, .form-select');
+                    inputs.forEach((input, index) => {
+                        setTimeout(() => {
+                            input.value = '';
+                            input.classList.remove('is-valid', 'is-invalid');
+
+                            // Beautiful clear animation
+                            input.style.transform = 'scale(0.98)';
+                            setTimeout(() => {
+                                input.style.transition = 'transform 0.2s ease';
+                                input.style.transform = 'scale(1)';
+                            }, 50);
+                        }, index * 50);
+                    });
+                }
+            });
+
+            // Return to first tab with animation
+            const formTab = document.getElementById('form-tab');
+            if (formTab) {
+                const tab = new bootstrap.Tab(formTab);
+                tab.show();
+            }
+
+            // Beautiful scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            showNotification('Ready for new analysis 🚀', 'info');
+            currentAnalysis = '';
+        }
+
+        function downloadReport() {
+            console.log('📥 Beautiful download...');
+
+            if (!currentAnalysis) {
+                showNotification('No analysis to download', 'error');
+                return;
+            }
+
+            try {
+                const petName = document.getElementById('pet_name')?.value ||
+                               document.getElementById('cam_pet_name')?.value || 'pet';
+                const petBreed = document.getElementById('pet_breed')?.value ||
+                                document.getElementById('cam_pet_breed')?.value || 'Unknown';
+                const petType = document.getElementById('pet_type')?.value ||
+                               document.getElementById('cam_pet_type')?.value || 'Unknown';
+
+                const fileName = `${petName}_psychology_report_${new Date().toISOString().slice(0,10)}.txt`;
+
+                const content = `
+🧠 PETPSYCH AI - BEHAVIORAL ANALYSIS REPORT
+${'='.repeat(60)}
+
+📋 PET INFORMATION
+Name: ${petName}
+Type: ${petType}
+Breed: ${petBreed}
+Analysis Date: ${new Date().toLocaleString()}
+
+📊 ANALYSIS RESULTS
+${currentAnalysis}
+
+📋 DISCLAIMER
+This analysis is generated by AI and should not replace professional veterinary advice.
+For health concerns, please consult with a qualified veterinarian.
+
+${'='.repeat(60)}
+Generated by PetPsych AI
+Powered by Gemini 1.5 Pro • © 2025 PetPsych AI
+                `.trim();
+
+                const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                a.style.display = 'none';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                showNotification('📥 Report downloaded successfully!', 'success');
+
+            } catch (error) {
+                console.error('Beautiful download error:', error);
+                showNotification('Download failed. Please try again.', 'error');
+            }
+        }
+
+        function showNotification(message, type = 'info', duration = 5000) {
+            console.log(`📢 ${type.toUpperCase()}: ${message}`);
+
+            // Remove existing notifications
+            const existing = document.querySelectorAll('.beautiful-notification');
+            existing.forEach(n => n.remove());
+
+            const notification = document.createElement('div');
+            notification.className = 'beautiful-notification';
+
+            const colors = {
+                success: 'linear-gradient(135deg, #10b981, #059669)',
+                error: 'linear-gradient(135deg, #ef4444, #dc2626)',
+                warning: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                info: 'linear-gradient(135deg, #0FA3D4, #00D4AA)'
+            };
+
+            const icons = {
+                success: 'check-circle',
+                error: 'exclamation-circle',
+                warning: 'exclamation-triangle',
+                info: 'info-circle'
+            };
+
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 9999;
+                padding: 1rem 1.5rem;
+                border-radius: 16px;
+                color: white;
+                font-weight: 500;
+                max-width: 350px;
+                background: ${colors[type]};
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                backdrop-filter: blur(10px);
+                transform: translateX(100px) scale(0.9);
+                opacity: 0;
+                transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                border: 1px solid rgba(255,255,255,0.2);
+            `;
+
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-${icons[type]}" style="font-size: 1.2rem;"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Beautiful animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0) scale(1)';
+                notification.style.opacity = '1';
+            }, 100);
+
+            // Beautiful animate out
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100px) scale(0.9)';
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 400);
+            }, duration);
+        }
+
+        // Add beautiful CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            .analysis-section {
+                animation: slideInLeft 0.6s ease-out;
+            }
+
+            @keyframes slideInLeft {
+                from { opacity: 0; transform: translateX(-30px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+
+            .form-control:focus, .form-select:focus {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(15, 163, 212, 0.15) !important;
+            }
+
+            .btn:hover {
+                transform: translateY(-3px) !important;
+            }
+
+            .main-card:hover {
+                transform: translateY(-8px) !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        console.log('🎉 Beautiful PetPsych AI fully loaded!');
     </script>
 </body>
 </html>
