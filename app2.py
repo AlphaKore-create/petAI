@@ -143,7 +143,7 @@ You are PetPsych AI, an advanced animal behavior analyst with expertise in veter
 📋 BEHAVIORAL OBSERVATIONS:
 Primary Behavior: {pet_data.get('behavior_desc', 'Not specified')}
 Vocal Cues: {pet_data.get('vocal_cues', 'Not specified')}
-Environmental Context: {pet_data.get('context', 'Not specified')}
+What user wants to know: {pet_data.get('query', 'Not specified')}
 
 {f"🎥 VIDEO ANALYSIS: {video_analysis}" if video_analysis else ""}
 
@@ -153,63 +153,29 @@ For {pet_data['pet_type']} behavioral analysis, focus on:
 • Emotional States: {species_info['emotions']}
 • Health Indicators: {species_info['health_indicators']}
 
-📊 REQUIRED ANALYSIS STRUCTURE:
+1. 👀 What I Saw (Behavior)
 
-**1. 🎯 Behavioral Assessment**
-Provide a comprehensive analysis of the observed behaviors, including:
-- Primary behavioral patterns identified
-- Frequency and intensity of behaviors
-- Contextual triggers and environmental factors
-- Comparison to species-normal behaviors
+Short list of the key behaviors (e.g., pacing near door, whining, no tail wagging).
 
-**2. 🧠 Psychological Profile**
-Analyze the emotional and mental state:
-- Current emotional state indicators
-- Stress levels and anxiety markers
-- Social and environmental comfort levels
-- Cognitive engagement and mental stimulation needs
+Simple context (when, where).
 
-**3. 🏥 Health & Wellness Indicators**
-Evaluate physical and mental health signals:
-- Movement patterns and physical comfort
-- Appetite and energy level indicators
-- Sleep and rest pattern analysis
-- Any potential health concerns to monitor
+2. 🧠 What It Could Mean (Possible Reasons)
 
-**4. 💡 Behavioral Recommendations**
-Provide specific, actionable advice:
-- Immediate environmental modifications
-- Enrichment activities tailored to species
-- Training or behavior modification techniques
-- Social interaction recommendations
+Emotional state (happy, anxious, restless, curious).
 
-**5. ⚠️ Professional Consultation Indicators**
-Identify when professional help is needed:
-- Behaviors requiring veterinary attention
-- Signs warranting animal behaviorist consultation
-- Timeline for improvement expectations
-- Emergency warning signs to watch for
+Everyday needs (bathroom, food, play, comfort).
 
-**6. 📈 Monitoring & Follow-up**
-Suggest ongoing assessment strategies:
-- Behavioral tracking methods
-- Progress indicators to watch for
-- Timeline for reassessment
-- Documentation recommendations
+Possible health-related concerns (if relevant).
 
-🎨 COMMUNICATION STYLE:
-- Use warm, professional tone
-- Include relevant emojis for section clarity
-- Provide specific, actionable insights
-- Balance scientific accuracy with accessibility
-- Include breed-specific considerations
-- Acknowledge individual personality variations
+3. 💡 What You Should Try (Next Steps)
 
-⚕️ ETHICAL GUIDELINES:
-- Emphasize this analysis supplements, not replaces, veterinary care
-- Recommend professional consultation for health concerns
-- Acknowledge limitations of remote behavioral analysis
-- Provide evidence-based recommendations only
+2–4 clear, actionable suggestions.
+
+Split into: “Do Now” ✅ and “Optional/Extra” 🌟.
+
+4. ⚠️ Watch Out For (Red Flags)
+
+Quick bullet list of signs that mean: “Time to see a vet/behaviorist.”
 
 Please provide a thorough, compassionate analysis that helps {pet_data['pet_name']}'s human understand their behavioral patterns and strengthens their bond through better communication.
 """
@@ -223,13 +189,6 @@ def analyze_video_content(video_data):
         return ""
 
     try:
-        # In a real implementation, you would:
-        # 1. Extract frames from video
-        # 2. Analyze visual content
-        # 3. Detect motion patterns
-        # 4. Identify behavioral markers
-
-        # For now, return a basic analysis indication
         video_size = len(video_data) if isinstance(video_data, str) else 0
 
         if video_size > 1000000:  # > 1MB base64 data
@@ -246,8 +205,18 @@ def analyze_video_content(video_data):
 
 @app.route('/')
 def index():
-    """Render the main application page."""
+    """Render the landing page."""
     return render_template('index.html')
+
+
+@app.route('/analysis')
+def analysis():
+    """Render the analysis page."""
+    return render_template('analysis.html')
+@app.route('/debug')
+def debug():
+    """Debug route to test template rendering"""
+    return "Debug route working!"
 
 
 @app.route('/analyze_behavior', methods=['POST'])
@@ -297,7 +266,7 @@ def analyze_behavior():
                 video_analysis = f"Uploaded video file analyzed ({duration_estimate} duration, {file_size // 1024}KB). "
                 video_analysis += "Visual behavioral patterns and environmental context extracted from footage."
 
-                # Clean up file after processing (in production, you might want to keep it temporarily)
+                # Clean up file after processing
                 try:
                     os.remove(video_path)
                 except OSError:
@@ -508,7 +477,8 @@ if __name__ == '__main__':
 
     if debug_mode:
         logger.info("🚀 Starting PetPsych AI in DEVELOPMENT mode")
-        logger.info(f"📍 Access the application at: http://{host}:{port}")
+        logger.info(f"📍 Landing page: http://{host}:{port}")
+        logger.info(f"📊 Analysis page: http://{host}:{port}/analysis")
         logger.info("🔧 Debug mode enabled - auto-reload on code changes")
     else:
         logger.info("🏭 Starting PetPsych AI in PRODUCTION mode")
@@ -518,6 +488,7 @@ if __name__ == '__main__':
     logger.info(f"🤖 AI Model: Gemini 1.5 Pro - {'✅ Connected' if GOOGLE_API_KEY else '❌ Not configured'}")
     logger.info(f"📁 Upload folder: {app.config['UPLOAD_FOLDER']}")
     logger.info(f"📦 Max upload size: {app.config['MAX_CONTENT_LENGTH'] // (1024 * 1024)}MB")
+    logger.info("🎨 New Orange & Navy Blue Theme Enabled")
 
     # Cleanup old files on startup
     cleanup_old_files()
