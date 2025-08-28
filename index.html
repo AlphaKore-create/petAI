@@ -3,940 +3,952 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PetPsych AI - Understanding Your Pet's Mind</title>
+    <title>PetPsych AI - Professional Pet Behavior Analysis</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Dark Blue Palette */
+            --navy-900: #0a0f1c;
+            --navy-800: #1a2332;
+            --navy-700: #2d3a52;
+            --navy-600: #3c4a63;
+            --navy-500: #4b5a73;
+            --navy-400: #5a6a84;
+            --navy-300: #6b7a94;
+            --navy-200: #8a97ac;
+            --navy-100: #a9b4c4;
+            --navy-50: #d4d9e0;
+
+            /* Orange Palette */
+            --orange-500: #ff6b35;
+            --orange-400: #ff7f50;
+            --orange-300: #ff9470;
+            --orange-600: #e55a2b;
+            --orange-700: #cc4e21;
+            --orange-800: #b3421d;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--navy-900) 0%, var(--navy-700) 50%, var(--navy-600) 100%);
+            --gradient-orange: linear-gradient(135deg, var(--orange-500) 0%, var(--orange-600) 100%);
+            --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+
+            /* Shadows */
+            --shadow-soft: 0 8px 32px rgba(10, 15, 28, 0.1);
+            --shadow-medium: 0 12px 48px rgba(10, 15, 28, 0.15);
+            --shadow-strong: 0 20px 64px rgba(10, 15, 28, 0.2);
+            --shadow-orange: 0 8px 32px rgba(255, 107, 53, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gradient-primary);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--gradient-primary);
+        }
+
+        .background-animation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.02"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.02"/><circle cx="50" cy="10" r="1" fill="%23ffffff" opacity="0.02"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Header */
+        .navbar {
+            background: rgba(26, 35, 50, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar:hover {
+            background: rgba(26, 35, 50, 0.98);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.75rem;
+            color: white !important;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .navbar-brand:hover {
+            transform: translateY(-2px);
+            color: var(--orange-300) !important;
+        }
+
+        /* Enhanced Pet Logo */
+        .brand-logo {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-orange);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-orange);
+        }
+
+        .brand-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .brand-logo:hover::before {
+            animation: shimmer 0.8s ease-out;
+        }
+
+        .brand-logo:hover {
+            transform: scale(1.15) rotate(10deg);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.5);
+            background: linear-gradient(135deg, var(--orange-400) 0%, var(--orange-500) 100%);
+        }
+
+        /* Pet Face Logo SVG */
+        .pet-logo-svg {
+            width: 32px;
+            height: 32px;
+            transition: all 0.3s ease;
+        }
+
+        .brand-logo:hover .pet-logo-svg {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) rotate(45deg); opacity: 0; }
+        }
+
+        /* Enhanced Brand Text */
+        .brand-text {
+            background: linear-gradient(135deg, white 0%, var(--orange-300) 50%, white 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 100%;
+            animation: gradient-shift 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand:hover .brand-text {
+            animation-duration: 0.8s;
+            filter: drop-shadow(0 0 8px rgba(255, 107, 53, 0.3));
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Hero Section */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced Hero Logo */
+        .hero-logo {
+            width: 150px;
+            height: 150px;
+            background: var(--gradient-orange);
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: var(--shadow-orange);
+            animation: float-pulse 4s ease-in-out infinite;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            cursor: pointer;
+        }
+
+        .hero-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 20px 60px rgba(255, 107, 53, 0.6);
+            background: linear-gradient(135deg, var(--orange-400) 0%, var(--orange-600) 100%);
+        }
+
+        .hero-logo::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px solid var(--orange-500);
+            animation: ripple 3s infinite;
+            opacity: 0.7;
+        }
+
+        .hero-logo:hover::after {
+            animation-duration: 1s;
+            border-color: var(--orange-300);
+        }
+
+        .hero-pet-svg {
+            width: 80px;
+            height: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .hero-logo:hover .hero-pet-svg {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4));
+        }
+
+        @keyframes float-pulse {
+            0%, 100% { transform: scale(1) translateY(0px); }
+            25% { transform: scale(1.02) translateY(-5px); }
+            75% { transform: scale(0.98) translateY(5px); }
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1.4);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced Hero Title */
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, white 0%, var(--orange-300) 30%, white 70%, var(--orange-200) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 300% 100%;
+            animation: title-glow 4s ease-in-out infinite;
+            position: relative;
+        }
+
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-orange);
+            border-radius: 2px;
+            animation: underline-expand 2s ease-in-out infinite;
+        }
+
+        @keyframes title-glow {
+            0%, 100% {
+                background-position: 0% 50%;
+                filter: drop-shadow(0 0 20px rgba(255, 107, 53, 0.3));
+            }
+            50% {
+                background-position: 100% 50%;
+                filter: drop-shadow(0 0 30px rgba(255, 107, 53, 0.5));
+            }
+        }
+
+        @keyframes underline-expand {
+            0%, 100% { width: 80px; }
+            50% { width: 120px; }
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-weight: 400;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .hero-subtitle:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            transition: all 0.3s ease;
+        }
+
+        .hero-description:hover {
+            opacity: 0.95;
+        }
+
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: all 0.6s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-strong);
+            border-color: var(--orange-500);
+        }
+
+        /* Enhanced Feature Icons */
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-orange);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            margin: 0 auto 1.5rem;
+            box-shadow: var(--shadow-orange);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .feature-icon::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            background: var(--gradient-orange);
+            filter: blur(10px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.5);
+        }
+
+        .feature-card:hover .feature-icon::after {
+            opacity: 0.7;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-title {
+            color: var(--orange-300);
+            transform: translateY(-2px);
+        }
+
+        .feature-description {
+            opacity: 0.8;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-description {
+            opacity: 1;
+        }
+
+        /* Enhanced Buttons */
+        .btn-primary {
+            background: var(--gradient-orange);
+            border: none;
+            padding: 1.25rem 3rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: var(--shadow-orange);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.5);
+            color: white;
+            background: linear-gradient(135deg, var(--orange-400) 0%, var(--orange-500) 100%);
+        }
+
+        .btn-primary i {
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover i {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--orange-500);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            color: var(--orange-500);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            margin-left: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--orange-500);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .btn-secondary:hover::before {
+            width: 300%;
+            height: 300%;
+        }
+
+        .btn-secondary:hover {
+            color: white;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: var(--shadow-orange);
+            border-color: var(--orange-400);
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(10, 15, 28, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--orange-500);
+            transition: width 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--orange-500);
+            transform: translateY(-1px);
+        }
+
+        .footer-link:hover::after {
+            width: 100%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-logo {
+                width: 120px;
+                height: 120px;
+            }
+
+            .hero-pet-svg {
+                width: 60px;
+                height: 60px;
+            }
+
+            .btn-primary {
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Demo Notification -->
-    <div class="demo-notification">
-        <div class="alert alert-info alert-dismissible fade show">
-            <i class="fas fa-brain me-2"></i>
-            <strong>AI Ready:</strong> Advanced pet psychology analysis powered by Gemini AI
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
         </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <div class="brand-logo">
-                    <svg width="40" height="40" viewBox="0 0 100 100" class="logo-svg">
-                        <defs>
-                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#0FA3D4;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <!-- Dog silhouette -->
-                        <path d="M35 25 C40 15, 55 15, 65 25 C70 30, 70 35, 65 40 C60 45, 55 50, 50 55 C45 50, 40 45, 35 40 C30 35, 30 30, 35 25 Z" fill="url(#logoGradient)"/>
-                        <!-- Cat silhouette -->
-                        <path d="M25 45 C30 35, 45 35, 55 45 C60 50, 60 55, 55 60 C50 65, 45 70, 40 75 C35 70, 30 65, 25 60 C20 55, 20 50, 25 45 Z" fill="url(#logoGradient)" opacity="0.8"/>
-                        <!-- Eyes -->
-                        <circle cx="42" cy="32" r="2" fill="#1e3a5f"/>
-                        <circle cx="58" cy="32" r="2" fill="#1e3a5f"/>
-                        <circle cx="32" cy="52" r="1.5" fill="#1e3a5f"/>
-                        <circle cx="48" cy="52" r="1.5" fill="#1e3a5f"/>
-                    </svg>
-                </div>
+    <img src="/static/images/logo.png"
+         alt="PetPsych AI Logo"
+         style="width: 32px; height: 32px; object-fit: contain;">
+</div>
                 <span class="brand-text">PetPsych AI</span>
             </a>
-            <div class="navbar-nav ms-auto">
-                <div class="nav-status">
-                    <span class="status-dot"></span>
-                    <span class="status-text">AI Online</span>
-                </div>
-            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero-section">
         <div class="container">
-            <div class="row justify-content-center text-center">
-                <div class="col-lg-8">
-                    <div class="hero-content">
-                        <div class="hero-logo-large mb-4">
-                            <svg width="120" height="120" viewBox="0 0 100 100" class="hero-logo-svg">
-                                <defs>
-                                    <linearGradient id="heroLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:#0FA3D4;stop-opacity:1" />
-                                    </linearGradient>
-                                </defs>
-                                <!-- Dog silhouette -->
-                                <path d="M35 25 C40 15, 55 15, 65 25 C70 30, 70 35, 65 40 C60 45, 55 50, 50 55 C45 50, 40 45, 35 40 C30 35, 30 30, 35 25 Z" fill="url(#heroLogoGradient)"/>
-                                <!-- Cat silhouette -->
-                                <path d="M25 45 C30 35, 45 35, 55 45 C60 50, 60 55, 55 60 C50 65, 45 70, 40 75 C35 70, 30 65, 25 60 C20 55, 20 50, 25 45 Z" fill="url(#heroLogoGradient)" opacity="0.8"/>
-                                <!-- Brain pattern overlay -->
-                                <path d="M42 28 C45 25, 50 25, 53 28 C55 30, 55 32, 53 34 M38 48 C41 45, 46 45, 49 48 C51 50, 51 52, 49 54" stroke="#ffffff" stroke-width="1" fill="none" opacity="0.6"/>
-                            </svg>
-                        </div>
-                        <h1 class="hero-title">Understanding Your Pet's Mind</h1>
-                        <p class="hero-subtitle">Advanced AI psychology that decodes your pet's behaviors, emotions, and thoughts into meaningful insights for deeper bonding.</p>
-                        <div class="hero-features">
-                            <div class="feature-pill">
-                                <i class="fas fa-brain"></i>
-                                <span>AI Psychology</span>
-                            </div>
-                            <div class="feature-pill">
-                                <i class="fas fa-video"></i>
-                                <span>Live Analysis</span>
-                            </div>
-                            <div class="feature-pill">
-                                <i class="fas fa-heart"></i>
-                                <span>Emotional Intelligence</span>
-                            </div>
-                        </div>
+            <div class="hero-content">
+             <div class="hero-logo">
+    <img src="static/images/hero-logo.png"
+         alt="PetPsych AI Hero Logo"
+         class="hero-pet-svg"
+         style="width: 80px; height: 80px; object-fit: contain;">
+</div>
+                <h1 class="hero-title">PetPsych AI</h1>
+                <p class="hero-subtitle">Professional Pet Behavior Analysis Platform</p>
+                <p class="hero-description">
+                    Unlock the mysteries of your pet's mind with advanced AI-powered behavioral analysis.
+                    Get professional insights into your pet's emotions, needs, and psychological well-being.
+                </p>
+
+                <div class="text-center">
+                    <a href="/analysis" class="btn btn-primary">
+                        <i class="fas fa-paw"></i>
+                        Start Analysis
+                    </a>
+                    <a href="#features" class="btn-secondary">
+                        <i class="fas fa-info-circle"></i>
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Features Section -->
+    <section id="features" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 style="font-size: 3rem; font-weight: 800; margin-bottom: 1rem;">
+                    Why Choose <span style="color: var(--orange-500);">PetPsych AI</span>?
+                </h2>
+                <p style="font-size: 1.2rem; opacity: 0.8; max-width: 600px; margin: 0 auto;">
+                    Advanced artificial intelligence meets veterinary psychology to provide unprecedented insights into your pet's behavior.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
                     </div>
+                    <h3 class="feature-title">AI-Powered Analysis</h3>
+                    <p class="feature-description">
+                        Our advanced AI model analyzes complex behavioral patterns using cutting-edge machine learning algorithms.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <h3 class="feature-title">Live Video Analysis</h3>
+                    <p class="feature-description">
+                        Upload videos or use live camera feed for real-time behavioral assessment and instant insights.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="feature-title">Health Monitoring</h3>
+                    <p class="feature-description">
+                        Detect early signs of health issues through behavioral changes and stress indicators.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="feature-title">Detailed Reports</h3>
+                    <p class="feature-description">
+                        Comprehensive analysis reports with actionable recommendations and professional insights.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Veterinary Backed</h3>
+                    <p class="feature-description">
+                        Analysis framework developed in consultation with professional veterinary behaviorists.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="feature-title">Mobile Friendly</h3>
+                    <p class="feature-description">
+                        Access from any device - desktop, tablet, or smartphone for convenient on-the-go analysis.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Main Content -->
-    <div class="container my-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <div class="main-card fade-in">
-                    <div class="card-body">
-                        <!-- Tabs -->
-                        <ul class="nav nav-tabs" id="mainTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="form-tab" data-bs-toggle="tab" data-bs-target="#form"
-                                        type="button" role="tab" aria-selected="true">
-                                    <i class="fas fa-edit me-2"></i>
-                                    <span>Behavioral Input</span>
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="camera-tab" data-bs-toggle="tab" data-bs-target="#camera"
-                                        type="button" role="tab" aria-selected="false">
-                                    <i class="fas fa-video me-2"></i>
-                                    <span>Live Capture</span>
-                                </button>
-                            </li>
-                        </ul>
-
-                        <div class="tab-content" id="tabContent">
-                            <!-- Form Tab -->
-                            <div class="tab-pane fade show active" id="form" role="tabpanel">
-                                <div class="form-container">
-                                    <div class="form-header">
-                                        <h4><i class="fas fa-clipboard-list me-2"></i>Pet Behavioral Analysis</h4>
-                                        <p class="text-muted">Provide detailed information about your pet's behavior for comprehensive AI analysis</p>
-                                    </div>
-
-                                    <form id="petForm">
-                                        <div class="row">
-                                            <div class="col-md-6 mb-4">
-                                                <label for="pet_name" class="form-label">
-                                                    <i class="fas fa-heart text-danger me-2"></i>Pet's Name
-                                                </label>
-                                                <input type="text" class="form-control" id="pet_name" name="pet_name"
-                                                       placeholder="Enter your pet's name" required>
-                                            </div>
-                                            <div class="col-md-6 mb-4">
-                                                <label for="pet_breed" class="form-label">
-                                                    <i class="fas fa-dna me-2"></i>Pet's Breed
-                                                </label>
-                                                <input type="text" class="form-control" id="pet_breed" name="pet_breed"
-                                                       placeholder="e.g., Golden Retriever, Persian Cat" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-4">
-                                                <label for="pet_type" class="form-label">
-                                                    <i class="fas fa-paw me-2"></i>Pet Type
-                                                </label>
-                                                <select class="form-select" id="pet_type" name="pet_type" required>
-                                                    <option value="">Select pet type</option>
-                                                    <option value="dog">🐕 Dog</option>
-                                                    <option value="cat">🐱 Cat</option>
-                                                    <option value="bird">🐦 Bird</option>
-                                                    <option value="rabbit">🐰 Rabbit</option>
-                                                    <option value="hamster">🐹 Hamster</option>
-                                                    <option value="guinea pig">🐹 Guinea Pig</option>
-                                                    <option value="ferret">🦫 Ferret</option>
-                                                    <option value="other">🐾 Other</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="mb-4">
-                                            <label for="behavior_desc" class="form-label">
-                                                <i class="fas fa-eye me-2"></i>Behavior Description
-                                                <span class="badge bg-primary ms-2">Required</span>
-                                            </label>
-                                            <textarea class="form-control" id="behavior_desc" name="behavior_desc" rows="4"
-                                                    placeholder="Describe your pet's behavior in detail (e.g., pacing back and forth, tail wagging rapidly, unusual vocalizations, body posture changes)" required></textarea>
-                                        </div>
-
-                                        <div class="mb-4">
-                                            <label for="vocal_cues" class="form-label">
-                                                <i class="fas fa-volume-up me-2"></i>Vocal Cues & Sounds
-                                            </label>
-                                            <textarea class="form-control" id="vocal_cues" name="vocal_cues" rows="3"
-                                                    placeholder="Describe any sounds: barking patterns, meowing types, chirping, whimpering, purring intensity, etc."></textarea>
-                                        </div>
-
-                                        <div class="mb-4">
-                                            <label for="context" class="form-label">
-                                                <i class="fas fa-map-marker-alt me-2"></i>Environmental Context
-                                                <i class="fas fa-question-circle tooltip-icon ms-2"
-                                                   data-bs-toggle="tooltip"
-                                                   title="Include environmental factors, recent changes, or events that might influence your pet's behavior"></i>
-                                            </label>
-                                            <textarea class="form-control" id="context" name="context" rows="3"
-                                                    placeholder="Environment details: new home, visitors, weather changes, schedule disruptions, other pets, recent vet visits, etc."></textarea>
-                                        </div>
-
-                                        <div class="mb-4">
-                                            <label for="video_file" class="form-label">
-                                                <i class="fas fa-file-video me-2"></i>Upload Video (Optional)
-                                            </label>
-                                            <input class="form-control" type="file" id="video_file" name="video_file"
-                                                   accept="video/*">
-                                            <div class="form-text mt-2">
-                                                <i class="fas fa-info-circle me-1"></i>
-                                                Video uploads provide more accurate behavioral analysis
-                                            </div>
-                                        </div>
-
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-lg submit-btn">
-                                                <i class="fas fa-brain me-2"></i>
-                                                <span>Analyze Pet Psychology</span>
-                                                <div class="btn-glow"></div>
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-
-                            <!-- Camera Tab -->
-                            <div class="tab-pane fade" id="camera" role="tabpanel">
-                                <div class="text-center mb-4">
-                                    <div class="feature-icon mx-auto">
-                                        <i class="fas fa-video"></i>
-                                    </div>
-                                    <h4>Real-time Behavioral Capture</h4>
-                                    <p class="text-muted">Use your camera to record live pet behavior for immediate AI analysis</p>
-                                </div>
-
-                                <div class="video-container">
-                                    <div id="cameraPlaceholder">
-                                        <div class="camera-icon">
-                                            <i class="fas fa-camera"></i>
-                                        </div>
-                                        <h5>Camera Ready</h5>
-                                        <p class="mb-0">Click "Start Camera" to begin recording your pet's behavior</p>
-                                    </div>
-                                    <video id="videoElement" style="display: none;" autoplay="true"></video>
-                                </div>
-
-                                <div class="text-center mb-4">
-                                    <div class="action-buttons justify-content-center">
-                                        <button id="startCameraBtn" class="btn btn-primary camera-btn">
-                                            <i class="fas fa-play me-2"></i>Start Camera
-                                        </button>
-                                        <button id="captureBtn" class="btn btn-success camera-btn" style="display:none;">
-                                            <i class="fas fa-record-vinyl me-2"></i>Start Recording
-                                        </button>
-                                        <button id="stopBtn" class="btn btn-danger camera-btn" style="display:none;">
-                                            <i class="fas fa-stop me-2"></i>Stop Recording
-                                        </button>
-                                        <button id="stopCameraBtn" class="btn btn-secondary camera-btn" style="display:none;">
-                                            <i class="fas fa-camera-slash me-2"></i>Turn Off Camera
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div id="cameraFormContainer" style="display:none;">
-                                    <div class="form-container">
-                                        <div class="form-header">
-                                            <h5><i class="fas fa-plus-circle me-2"></i>Complete Your Analysis</h5>
-                                            <p class="text-muted">Add contextual details to enhance AI analysis accuracy</p>
-                                        </div>
-
-                                        <form id="cameraForm">
-                                            <div class="row">
-                                                <div class="col-md-6 mb-4">
-                                                    <label for="cam_pet_name" class="form-label">
-                                                        <i class="fas fa-heart text-danger me-2"></i>Pet's Name
-                                                    </label>
-                                                    <input type="text" class="form-control" id="cam_pet_name" name="pet_name" required>
-                                                </div>
-                                                <div class="col-md-6 mb-4">
-                                                    <label for="cam_pet_breed" class="form-label">
-                                                        <i class="fas fa-dna me-2"></i>Pet's Breed
-                                                    </label>
-                                                    <input type="text" class="form-control" id="cam_pet_breed" name="pet_breed" required>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-md-6 mb-4">
-                                                    <label for="cam_pet_type" class="form-label">
-                                                        <i class="fas fa-paw me-2"></i>Pet Type
-                                                    </label>
-                                                    <select class="form-select" id="cam_pet_type" name="pet_type" required>
-                                                        <option value="">Select pet type</option>
-                                                        <option value="dog">🐕 Dog</option>
-                                                        <option value="cat">🐱 Cat</option>
-                                                        <option value="bird">🐦 Bird</option>
-                                                        <option value="rabbit">🐰 Rabbit</option>
-                                                        <option value="hamster">🐹 Hamster</option>
-                                                        <option value="guinea pig">🐹 Guinea Pig</option>
-                                                        <option value="ferret">🦫 Ferret</option>
-                                                        <option value="other">🐾 Other</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <label for="cam_behavior_desc" class="form-label">
-                                                    <i class="fas fa-eye me-2"></i>Observed Behavior
-                                                </label>
-                                                <textarea class="form-control" id="cam_behavior_desc" name="behavior_desc" rows="3"
-                                                        placeholder="Describe what your pet was doing during the recording"></textarea>
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <label for="cam_vocal_cues" class="form-label">
-                                                    <i class="fas fa-volume-up me-2"></i>Audio Cues
-                                                </label>
-                                                <textarea class="form-control" id="cam_vocal_cues" name="vocal_cues" rows="2"
-                                                        placeholder="Sounds captured during recording"></textarea>
-                                            </div>
-
-                                            <div class="mb-4">
-                                                <label for="cam_context" class="form-label">
-                                                    <i class="fas fa-map-marker-alt me-2"></i>Recording Context
-                                                </label>
-                                                <textarea class="form-control" id="cam_context" name="context" rows="2"
-                                                        placeholder="Environmental factors during recording"></textarea>
-                                            </div>
-
-                                            <input type="hidden" id="captured_video" name="captured_video">
-
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-primary btn-lg submit-btn">
-                                                    <i class="fas fa-brain me-2"></i>
-                                                    <span>Analyze Captured Behavior</span>
-                                                    <div class="btn-glow"></div>
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Loading Indicator -->
-                <div class="loader" id="loader">
-                    <div class="loader-content">
-                        <div class="spinner"></div>
-                        <div class="loader-logo">
-                            <svg width="60" height="60" viewBox="0 0 100 100">
-                                <defs>
-                                    <linearGradient id="loaderGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
-                                        <stop offset="100%" style="stop-color:#0FA3D4;stop-opacity:1" />
-                                    </linearGradient>
-                                </defs>
-                                <path d="M35 25 C40 15, 55 15, 65 25 C70 30, 70 35, 65 40 C60 45, 55 50, 50 55 C45 50, 40 45, 35 40 C30 35, 30 30, 35 25 Z" fill="url(#loaderGradient)"/>
-                                <path d="M25 45 C30 35, 45 35, 55 45 C60 50, 60 55, 55 60 C50 65, 45 70, 40 75 C35 70, 30 65, 25 60 C20 55, 20 50, 25 45 Z" fill="url(#loaderGradient)" opacity="0.8"/>
-                            </svg>
-                        </div>
-                        <h5>AI Analysis in Progress</h5>
-                        <p class="text-muted mb-0">Decoding your pet's psychological patterns...</p>
-                        <div class="progress-bar">
-                            <div class="progress-fill"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Analysis Results -->
-                <div class="analysis-result slide-up" id="analysisResult" style="display: none;">
-                    <div class="analysis-header">
-                        <div class="analysis-icon">
-                            <i class="fas fa-brain"></i>
-                        </div>
-                        <h3>Pet Psychology Analysis Report</h3>
-                        <p class="analysis-subtitle">AI-powered behavioral insights and recommendations</p>
-                    </div>
-                    <div class="analysis-content">
-                        <div id="analysisContent"></div>
-                        <div class="action-buttons">
-                            <button id="newAnalysisBtn" class="btn btn-primary">
-                                <i class="fas fa-plus me-2"></i>New Analysis
-                            </button>
-                            <button id="downloadBtn" class="btn btn-secondary">
-                                <i class="fas fa-download me-2"></i>Download Report
-                            </button>
-                            <button class="btn btn-outline-primary">
-                                <i class="fas fa-share me-2"></i>Share Results
-                            </button>
-                        </div>
-                    </div>
-                    <div class="timestamp" id="timestamp"></div>
-                </div>
+    <!-- Call to Action -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center">
+                <h2 style="font-size: 2.8rem; font-weight: 800; margin-bottom: 1rem;">
+                    Ready to Understand Your Pet Better?
+                </h2>
+                <p style="font-size: 1.2rem; opacity: 0.8; margin-bottom: 2rem;">
+                    Join thousands of pet parents who trust PetPsych AI for professional behavioral insights.
+                </p>
+                <a href="/analysis" class="btn-primary" style="font-size: 1.3rem; padding: 1.5rem 4rem;">
+                    <i class="fas fa-rocket"></i>
+                    Begin Your Pet's Analysis
+                </a>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
-    <footer>
+    <footer class="footer">
         <div class="container">
             <div class="footer-content">
-                <div class="footer-logo">
-                    <svg width="40" height="40" viewBox="0 0 100 100" class="footer-logo-svg">
-                        <defs>
-                            <linearGradient id="footerLogoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#00D4AA;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#0FA3D4;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M35 25 C40 15, 55 15, 65 25 C70 30, 70 35, 65 40 C60 45, 55 50, 50 55 C45 50, 40 45, 35 40 C30 35, 30 30, 35 25 Z" fill="url(#footerLogoGradient)"/>
-                        <path d="M25 45 C30 35, 45 35, 55 45 C60 50, 60 55, 55 60 C50 65, 45 70, 40 75 C35 70, 30 65, 25 60 C20 55, 20 50, 25 45 Z" fill="url(#footerLogoGradient)" opacity="0.8"/>
-                    </svg>
-                    <span>PetPsych AI</span>
+                <div>
+                    <span style="color: var(--orange-500); font-weight: 700;">PetPsych AI</span>
+                    <span style="opacity: 0.7;"> • © 2025 • Powered by Alpha.Kore • Made By Hitarth Trivedi and Shlok Patel</span>
                 </div>
-                <p class="mb-2">Understanding your pet's mind through advanced AI psychology</p>
-                <small class="text-muted">Powered by Gemini 1.5 Pro • © 2025 PetPsych AI</small>
-                <div class="footer-links mt-3">
+                <div class="footer-links">
                     <a href="#" class="footer-link">Privacy Policy</a>
                     <a href="#" class="footer-link">Terms of Service</a>
                     <a href="#" class="footer-link">Support</a>
+                    <a href="#" class="footer-link">Contact</a>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Working JavaScript for Beautiful PetPsych AI
-        console.log('🧠 PetPsych AI Loading...');
-
-        let analysisInProgress = false;
-        let currentAnalysis = '';
-
-        // Initialize when DOM loads
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('📄 Beautiful version loading...');
-            initializeApp();
-        });
-
-        function initializeApp() {
-            // Initialize tooltips
-            const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            tooltipTriggerList.map(function (tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl);
-            });
-
-            // Setup form handlers
-            setupFormHandlers();
-
-            // Setup animations
-            setupAnimations();
-
-            console.log('✅ Beautiful PetPsych AI initialized');
-        }
-
-        function setupFormHandlers() {
-            const petForm = document.getElementById('petForm');
-            const cameraForm = document.getElementById('cameraForm');
-
-            if (petForm) {
-                petForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    console.log('📝 Pet form submitted');
-                    submitForm(this);
-                });
-            }
-
-            if (cameraForm) {
-                cameraForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    console.log('📹 Camera form submitted');
-                    submitForm(this);
-                });
-            }
-
-            // Button handlers
-            const newAnalysisBtn = document.getElementById('newAnalysisBtn');
-            if (newAnalysisBtn) {
-                newAnalysisBtn.addEventListener('click', resetForNewAnalysis);
-            }
-
-            const downloadBtn = document.getElementById('downloadBtn');
-            if (downloadBtn) {
-                downloadBtn.addEventListener('click', downloadReport);
-            }
-        }
-
-        function setupAnimations() {
-            // Add hover effects to cards
-            const cards = document.querySelectorAll('.main-card, .form-container');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-5px)';
-                });
-
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
-
-            // Logo animations
-            const logos = document.querySelectorAll('.logo-svg, .hero-logo-svg');
-            logos.forEach(logo => {
-                logo.addEventListener('mouseenter', function() {
-                    this.style.transform = 'scale(1.1) rotate(5deg)';
-                });
-
-                logo.addEventListener('mouseleave', function() {
-                    this.style.transform = 'scale(1) rotate(0deg)';
-                });
-            });
-        }
-
-        async function submitForm(form) {
-            if (analysisInProgress) {
-                showNotification('Analysis already in progress...', 'warning');
-                return;
-            }
-
-            // Validate form
-            if (!validateForm(form)) {
-                return;
-            }
-
-            analysisInProgress = true;
-
-            try {
-                // Show loading with beautiful animation
-                showLoader();
-                hideTabContent();
-
-                // Prepare and send request
-                const formData = new FormData(form);
-                console.log('📤 Sending beautiful analysis request...');
-
-                const response = await fetch('/analyze_behavior', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                console.log('📥 Response received:', response.status);
-
-                if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
-                }
-
-                const result = await response.json();
-                console.log('📊 Beautiful result received:', result.success);
-
-                // Display results with beautiful styling
-                displayBeautifulResults(result);
-
-            } catch (error) {
-                console.error('💥 Beautiful analysis failed:', error);
-                showNotification('Analysis failed: ' + error.message, 'error');
-                showTabContent();
-            } finally {
-                hideLoader();
-                analysisInProgress = false;
-            }
-        }
-
-        function validateForm(form) {
-            const requiredFields = form.querySelectorAll('[required]');
-            let isValid = true;
-
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    field.classList.add('is-invalid');
-                    isValid = false;
-                } else {
-                    field.classList.remove('is-invalid');
-                    field.classList.add('is-valid');
-                }
-            });
-
-            if (!isValid) {
-                showNotification('Please fill in all required fields', 'error');
-            }
-
-            return isValid;
-        }
-
-        function showLoader() {
-            const loader = document.getElementById('loader');
-            if (loader) {
-                loader.style.display = 'block';
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.transition = 'opacity 0.5s ease';
-                    loader.style.opacity = '1';
-                }, 100);
-                console.log('⏳ Beautiful loader shown');
-            }
-        }
-
-        function hideLoader() {
-            const loader = document.getElementById('loader');
-            if (loader) {
-                loader.style.opacity = '0';
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                }, 300);
-                console.log('✅ Beautiful loader hidden');
-            }
-        }
-
-        function hideTabContent() {
-            const tabContent = document.getElementById('tabContent');
-            if (tabContent) {
-                tabContent.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-                tabContent.style.opacity = '0.3';
-                tabContent.style.transform = 'scale(0.98)';
-                tabContent.style.pointerEvents = 'none';
-                console.log('📝 Beautiful form hidden');
-            }
-        }
-
-        function showTabContent() {
-            const tabContent = document.getElementById('tabContent');
-            if (tabContent) {
-                tabContent.style.opacity = '1';
-                tabContent.style.transform = 'scale(1)';
-                tabContent.style.pointerEvents = 'auto';
-                console.log('📝 Beautiful form shown');
-            }
-        }
-
-        function displayBeautifulResults(result) {
-            console.log('🎨 Displaying beautiful results...');
-
-            if (result.success) {
-                currentAnalysis = result.analysis;
-
-                // Format analysis with beautiful styling
-                const formattedAnalysis = formatBeautifulAnalysis(result.analysis);
-
-                // Update analysis content
-                const analysisContent = document.getElementById('analysisContent');
-                const timestamp = document.getElementById('timestamp');
-                const analysisResult = document.getElementById('analysisResult');
-
-                if (analysisContent) {
-                    analysisContent.innerHTML = formattedAnalysis;
-                }
-
-                if (timestamp) {
-                    timestamp.textContent = `Analysis completed: ${result.timestamp}`;
-                }
-
-                // Show results with beautiful animation
-                if (analysisResult) {
-                    analysisResult.style.display = 'block';
-                    analysisResult.style.opacity = '0';
-                    analysisResult.style.transform = 'translateY(30px)';
-
-                    setTimeout(() => {
-                        analysisResult.style.transition = 'all 0.6s ease';
-                        analysisResult.style.opacity = '1';
-                        analysisResult.style.transform = 'translateY(0)';
-                    }, 200);
-                }
-
-                // Beautiful scroll to results
-                setTimeout(() => {
-                    analysisResult.scrollIntoView({
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
                         behavior: 'smooth',
                         block: 'start'
                     });
-                }, 600);
-
-                // Animate content items
-                setTimeout(() => {
-                    animateAnalysisContent();
-                }, 800);
-
-                showNotification('🧠 Analysis completed successfully!', 'success');
-                console.log('✅ Beautiful results displayed');
-
-            } else {
-                console.error('❌ Beautiful analysis failed:', result.error);
-                showNotification('Analysis failed: ' + result.error, 'error');
-                showTabContent();
-            }
-        }
-
-        function formatBeautifulAnalysis(text) {
-            if (!text) return '<p>No analysis content received.</p>';
-
-            return text
-                // Enhanced headers with beautiful styling
-                .replace(/(\d+\.\s*)(.*?)(?=\n|$)/g, '<h4 class="analysis-section" style="color: #0FA3D4; margin: 2rem 0 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem;"><i class="fas fa-brain"></i>$1$2</h4>')
-                // Bold text with beautiful gradient
-                .replace(/\*\*(.*?)\*\*/g, '<strong style="background: linear-gradient(135deg, #0FA3D4, #00D4AA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 600;">$1</strong>')
-                // Italic text with subtle color
-                .replace(/\*(.*?)\*/g, '<em style="color: #64748b; font-style: italic;">$1</em>')
-                // Line breaks and paragraphs
-                .replace(/\n\n/g, '</p><p style="margin-bottom: 1.5rem; line-height: 1.8;">')
-                .replace(/\n/g, '<br>')
-                .replace(/^(.*)$/, '<p style="margin-bottom: 1.5rem; line-height: 1.8;">$1</p>')
-                // Beautiful callouts
-                .replace(/(Key insight:|Important:|Note:|Warning:)/gi, '<span style="background: linear-gradient(135deg, #0FA3D4, #00D4AA); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem; font-weight: 600; margin-right: 0.5rem;">$1</span>')
-                // Emoji enhancements
-                .replace(/(happy|joy|playful|content)/gi, '😊 $1')
-                .replace(/(anxious|stressed|worried|fearful)/gi, '😰 $1')
-                .replace(/(aggressive|angry|frustrated)/gi, '😠 $1');
-        }
-
-        function animateAnalysisContent() {
-            const sections = document.querySelectorAll('#analysisContent h4, #analysisContent p');
-            sections.forEach((section, index) => {
-                section.style.opacity = '0';
-                section.style.transform = 'translateY(20px)';
-
-                setTimeout(() => {
-                    section.style.transition = 'all 0.5s ease';
-                    section.style.opacity = '1';
-                    section.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-        }
-
-        function resetForNewAnalysis() {
-            console.log('🔄 Beautiful reset for new analysis...');
-
-            // Show form with beautiful animation
-            showTabContent();
-
-            setTimeout(() => {
-                document.getElementById('tabContent').style.animation = 'fadeIn 0.6s ease';
-            }, 100);
-
-            // Hide results with beautiful animation
-            const analysisResult = document.getElementById('analysisResult');
-            if (analysisResult) {
-                analysisResult.style.opacity = '0';
-                analysisResult.style.transform = 'translateY(-20px)';
-
-                setTimeout(() => {
-                    analysisResult.style.display = 'none';
-                }, 300);
-            }
-
-            // Reset forms with beautiful clearing animation
-            const forms = [document.getElementById('petForm'), document.getElementById('cameraForm')];
-            forms.forEach(form => {
-                if (form) {
-                    const inputs = form.querySelectorAll('.form-control, .form-select');
-                    inputs.forEach((input, index) => {
-                        setTimeout(() => {
-                            input.value = '';
-                            input.classList.remove('is-valid', 'is-invalid');
-
-                            // Beautiful clear animation
-                            input.style.transform = 'scale(0.98)';
-                            setTimeout(() => {
-                                input.style.transition = 'transform 0.2s ease';
-                                input.style.transform = 'scale(1)';
-                            }, 50);
-                        }, index * 50);
-                    });
                 }
             });
+        });
 
-            // Return to first tab with animation
-            const formTab = document.getElementById('form-tab');
-            if (formTab) {
-                const tab = new bootstrap.Tab(formTab);
-                tab.show();
-            }
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-            // Beautiful scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
 
-            showNotification('Ready for new analysis 🚀', 'info');
-            currentAnalysis = '';
-        }
+        // Observe feature cards for animation
+        document.querySelectorAll('.feature-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
 
-        function downloadReport() {
-            console.log('📥 Beautiful download...');
+        // Enhanced hover effects for interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add magnetic effect to buttons
+            const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+            buttons.forEach(button => {
+                button.addEventListener('mousemove', function(e) {
+                    const rect = button.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
 
-            if (!currentAnalysis) {
-                showNotification('No analysis to download', 'error');
-                return;
-            }
+                    button.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) translateY(-5px) scale(1.05)`;
+                });
 
-            try {
-                const petName = document.getElementById('pet_name')?.value ||
-                               document.getElementById('cam_pet_name')?.value || 'pet';
-                const petBreed = document.getElementById('pet_breed')?.value ||
-                                document.getElementById('cam_pet_breed')?.value || 'Unknown';
-                const petType = document.getElementById('pet_type')?.value ||
-                               document.getElementById('cam_pet_type')?.value || 'Unknown';
+                button.addEventListener('mouseleave', function() {
+                    button.style.transform = '';
+                });
+            });
 
-                const fileName = `${petName}_psychology_report_${new Date().toISOString().slice(0,10)}.txt`;
+            // Add floating animation to shapes
+            const shapes = document.querySelectorAll('.shape');
+            shapes.forEach((shape, index) => {
+                shape.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.2) rotate(45deg)';
+                    this.style.background = 'rgba(255, 107, 53, 0.2)';
+                });
 
-                const content = `
-🧠 PETPSYCH AI - BEHAVIORAL ANALYSIS REPORT
-${'='.repeat(60)}
+                shape.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                    this.style.background = 'rgba(255, 107, 53, 0.1)';
+                });
+            });
 
-📋 PET INFORMATION
-Name: ${petName}
-Type: ${petType}
-Breed: ${petBreed}
-Analysis Date: ${new Date().toLocaleString()}
+            // Enhanced logo animations
+            const logos = document.querySelectorAll('.brand-logo, .hero-logo');
+            logos.forEach(logo => {
+                logo.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
 
-📊 ANALYSIS RESULTS
-${currentAnalysis}
+                    const rotateX = (y / rect.height) * 10;
+                    const rotateY = (x / rect.width) * 10;
 
-📋 DISCLAIMER
-This analysis is generated by AI and should not replace professional veterinary advice.
-For health concerns, please consult with a qualified veterinarian.
+                    this.style.transform = `perspective(1000px) rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.1)`;
+                });
 
-${'='.repeat(60)}
-Generated by PetPsych AI
-Powered by Gemini 1.5 Pro • © 2025 PetPsych AI
-                `.trim();
+                logo.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+        });
 
-                const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-                const url = URL.createObjectURL(blob);
-
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileName;
-                a.style.display = 'none';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-
-                showNotification('📥 Report downloaded successfully!', 'success');
-
-            } catch (error) {
-                console.error('Beautiful download error:', error);
-                showNotification('Download failed. Please try again.', 'error');
-            }
-        }
-
-        function showNotification(message, type = 'info', duration = 5000) {
-            console.log(`📢 ${type.toUpperCase()}: ${message}`);
-
-            // Remove existing notifications
-            const existing = document.querySelectorAll('.beautiful-notification');
-            existing.forEach(n => n.remove());
-
-            const notification = document.createElement('div');
-            notification.className = 'beautiful-notification';
-
-            const colors = {
-                success: 'linear-gradient(135deg, #10b981, #059669)',
-                error: 'linear-gradient(135deg, #ef4444, #dc2626)',
-                warning: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                info: 'linear-gradient(135deg, #0FA3D4, #00D4AA)'
-            };
-
-            const icons = {
-                success: 'check-circle',
-                error: 'exclamation-circle',
-                warning: 'exclamation-triangle',
-                info: 'info-circle'
-            };
-
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 9999;
-                padding: 1rem 1.5rem;
-                border-radius: 16px;
-                color: white;
-                font-weight: 500;
-                max-width: 350px;
-                background: ${colors[type]};
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-                backdrop-filter: blur(10px);
-                transform: translateX(100px) scale(0.9);
-                opacity: 0;
-                transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-                border: 1px solid rgba(255,255,255,0.2);
-            `;
-
-            notification.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-${icons[type]}" style="font-size: 1.2rem;"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-
-            document.body.appendChild(notification);
-
-            // Beautiful animate in
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0) scale(1)';
-                notification.style.opacity = '1';
-            }, 100);
-
-            // Beautiful animate out
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100px) scale(0.9)';
-                notification.style.opacity = '0';
-                setTimeout(() => {
-                    if (notification.parentNode) {
-                        notification.remove();
-                    }
-                }, 400);
-            }, duration);
-        }
-
-        // Add beautiful CSS animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(20px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-
-            .analysis-section {
-                animation: slideInLeft 0.6s ease-out;
-            }
-
-            @keyframes slideInLeft {
-                from { opacity: 0; transform: translateX(-30px); }
-                to { opacity: 1; transform: translateX(0); }
-            }
-
-            .form-control:focus, .form-select:focus {
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(15, 163, 212, 0.15) !important;
-            }
-
-            .btn:hover {
-                transform: translateY(-3px) !important;
-            }
-
-            .main-card:hover {
-                transform: translateY(-8px) !important;
-            }
-        `;
-        document.head.appendChild(style);
-
-        console.log('🎉 Beautiful PetPsych AI fully loaded!');
+        console.log('🐾 Enhanced PetPsych AI with Pet Logo Loaded Successfully!');
     </script>
 </body>
 </html>
